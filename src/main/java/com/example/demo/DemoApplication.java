@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-public class GitApiApplication {
-
+public class DemoApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(GitApiApplication.class, args);
+		SpringApplication.run(DemoApplication.class, args);
 	}
 }
 
@@ -22,10 +22,10 @@ public class GitApiApplication {
 class HomeController {
 	@GetMapping
 	public Map<String, String> home() {
-		return Map.of(
-				"name", "Votre Nom",
-				"email", "votreMail@campus-eni.fr",
-				"date", LocalDate.now().toString()
-		);
+		Map<String, String> response = new HashMap<>();
+		response.put("name", "Votre Nom");
+		response.put("email", "votreMail@campus-eni.fr");
+		response.put("date", LocalDate.now().toString());
+		return response;
 	}
 }
