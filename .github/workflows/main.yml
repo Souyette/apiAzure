@@ -27,7 +27,7 @@ jobs:
 
       - name: Construire et taguer l'image Docker
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/mon-app:latest .
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/apiazure:latest .
 
       - name: Pousser l'image sur Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/mon-app:latest
