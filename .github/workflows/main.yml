@@ -34,6 +34,7 @@ jobs:
       - name: Pousser l'image sur Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
   deploy:
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
