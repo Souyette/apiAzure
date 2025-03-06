@@ -46,10 +46,9 @@ jobs:
       - name: Pull de l'image Docker depuis Docker Hub
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
 
-      - name: Arrêter et supprimer les anciens conteneurs
-        run: |
-          docker ps -q --filter "name=apiazure" | xargs -r docker stop | xargs -r docker rm
-
-      - name: Créer et démarrer le conteneur
-        run: |
-          docker run -d -p 8080:8080 --name apiazure ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
+      - name: Déploiement de l'image Docker sur Azure Web App
+        uses: azure/webapps-container-deploy@v2
+        with:
+          app-name: appaction
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}  # Profil de publication Azure
+          images: ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
