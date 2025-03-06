@@ -1,0 +1,26 @@
+name: Pull Docker
+
+on:
+  workflow_dispatch:
+  # Si tu veux que ce soit déclenché automatiquement à chaque push sur Docker Hub, tu peux utiliser un webhook Docker Hub.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Connexion à Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Pull de l'image Docker depuis Docker Hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
+
+      - name: Arrêter et supprimer les anciens conteneurs
+        run: |
+          docker ps -q --filter "name=apiazure" | xargs -r docker stop | xargs -r docker rm
+
+      - name: Créer et démarrer le conteneur
+        run: |
+          docker run -d -p 8080:8080 --name apiazure ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
