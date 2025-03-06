@@ -31,4 +31,4 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/apiazure:latest .
       - name: Pousser l'image sur Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/mon-app:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/apiazure:latest
